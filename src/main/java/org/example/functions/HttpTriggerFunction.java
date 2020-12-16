@@ -42,7 +42,7 @@ public class HttpTriggerFunction {
         } else {
             return request
               .createResponseBuilder(HttpStatus.OK)
-              .body("Hello, " + name + ". It's nice to meet you")
+              .body("Hello " + name + ". It's nice to meet you\n CI/CD is working")
               .build();
         }
     }
