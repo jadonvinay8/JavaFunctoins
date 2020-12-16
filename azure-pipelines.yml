@@ -21,10 +21,22 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
 
-- task: AzureRmWebAppDeployment@4
+- task: CopyFiles@2
+  displayName: Copy Files
   inputs:
-    ConnectionType: 'AzureRM'
+    SourceFolder: $(system.defaultworkingdirectory)/target/azure-functions/
+    Contents: '**'
+    TargetFolder: $(build.artifactstagingdirectory)   
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Artifact
+  inputs:
+    PathtoPublish: $(build.artifactstagingdirectory)    
+
+- task: AzureFunctionApp@1
+  displayName: Azure Function App deploy
+  inputs:
     azureSubscription: 'Free Trial(dac62e68-3d7f-4019-96e1-880f7c146ce6)'
-    appType: 'functionApp'
-    WebAppName: 'my-func123'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.jar'
+    appType: functionApp
+    appName: 'my-func123'
+    package: $(build.artifactstagingdirectory)
