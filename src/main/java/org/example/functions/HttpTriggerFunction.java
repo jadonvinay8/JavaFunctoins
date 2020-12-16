@@ -42,7 +42,7 @@ public class HttpTriggerFunction {
         } else {
             return request
               .createResponseBuilder(HttpStatus.OK)
-              .body("Hello, " + name)
+              .body("Hello, " + name + "nice to meet you")
               .build();
         }
     }
