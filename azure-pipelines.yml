@@ -13,30 +13,24 @@ steps:
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
 
-- task: CopyFiles@2
-  displayName: Copy Files
+- task: ArchiveFiles@2
   inputs:
-    SourceFolder: $(system.defaultworkingdirectory)/target/azure-functions/
-    Contents: '**'
-    TargetFolder: $(build.artifactstagingdirectory)   
+    rootFolderOrFile: '$(Build.BinariesDirectory)'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
 
 - task: PublishBuildArtifacts@1
-  displayName: Publish Artifact
   inputs:
-    PathtoPublish: $(build.artifactstagingdirectory)    
-
-- task: AzureFunctionApp@1
-  displayName: Azure Function App deploy
-  inputs:
-    azureSubscription: 'Free Trial(dac62e68-3d7f-4019-96e1-880f7c146ce6)'
-    appType: functionApp
-    appName: 'my-func123'
-    package: $(build.artifactstagingdirectory)
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
