@@ -27,4 +27,4 @@ steps:
     azureSubscription: 'Free Trial(dac62e68-3d7f-4019-96e1-880f7c146ce6)'
     appType: 'functionApp'
     WebAppName: 'my-func123'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.jar'
