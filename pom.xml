@@ -16,6 +16,10 @@
         <azure.functions.java.library.version>1.4.0</azure.functions.java.library.version>
         <functionAppName>azure-function-examples-1607921267230</functionAppName>
         <stagingDirectory>${project.build.directory}/azure-functions/${functionAppName}</stagingDirectory>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <functionAppRegion>westeurope</functionAppRegion>
+        <functionResourceGroup>function-app-deployment</functionResourceGroup>
     </properties>
 
     <dependencies>
